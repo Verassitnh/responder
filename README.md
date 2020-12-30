@@ -1,4 +1,7 @@
 # Responder
+[![time tracker](https://wakatime.com/badge/github/Verassitnh/responder.svg)](https://wakatime.com/badge/github/Verassitnh/responder)
+[![Liscense](https://img.shields.io/github/license/Verassitnh/responder?color=blue)]()
+
 A tiny lightning fast server-side framework for dart.
 ## Getting Started
 ```dart
