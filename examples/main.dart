@@ -1,13 +1,16 @@
 import 'package:responder/responder.dart';
 
-var app = new Responder();
+var app = Responder();
+var port = 3000;
 
-app.get('/a{dynamic}/route', (req, res) {
-  res.headers({
-    "Content-type": "application/json",
-    "x-foo": "bar",
-  })
-  res.send("Hello, World! ${req.params.dynamic}")
-})
+void main() {
+  app.listen(port, (iport, server) => print("Listening on $iport"));
 
-app.listen(3000, (port,) => print("listening on $address"));
+  app.get('/a{dynamic}/route', (req, res) {
+    res.headers({
+      "Content-type": "application/json",
+      "x-foo": "bar",
+    });
+    res.send("Hello, World! ${req.params.dynamic}");
+  });
+}
