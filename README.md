@@ -3,25 +3,20 @@ A tiny lightning fast server-side framework for dart.
 ## Getting Started
 ```dart
 import 'package:responder/responder.dart';
-var app = new Responder();
 
-app.get('/a{dynamic}/route', (req, res) {
-  res.headers({
-    "Content-type": "application/json",
-    "x-foo": "bar",
-  })
-  res.send("Hello, World! ${req.params.dynamic}")
-});
+var app = Responder();
+var port = 3000;
 
-app.listen(3000, (port) => print("listening on $address"));
-```
-# API Reference
-## `Responder(options)`
-Returns a `Responder` object.
-```dart
-Map options = {
-    "logger": false,
-    "ignoreTrailingSlash": true,
+void main() {
+  app.listen(port, (iport, server) => print("Listening on $iport"));
+
+  app.get('/a{dynamic}/route', (req, res) {
+    res.headers({
+      "Content-type": "application/json",
+      "x-foo": "bar",
+    });
+    res.send("Hello, World! ${req.params.dynamic}");
+  });
 }
 ```
 ### `.options`
