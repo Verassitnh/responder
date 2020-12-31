@@ -13,7 +13,7 @@ var port = 3000;
 void main() {
   app.get('/a{dynamic}/route', (req, res) {
     res.headers({
-      "Content-type": "plain/text",
+      "Content-type": "text/plain",
       "x-foo": "bar",
     });
     res.send("Hello, World! ${req.params.dynamic}");
