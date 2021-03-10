@@ -1,36 +1,23 @@
 import 'dart:io';
 
+class Handler {
+  String endpoint;
+  String method;
+  Function body;
+}
+
 class Responder {
-  Responder([this._options]);
+  Responder(this.settings);
 
-  final Map<String, dynamic> _options;
-  
+  List<Handler> database;
+  final Map<String, dynamic> settings;
+
   get(String route, cb) {
-    
-  }
-
-  post(String route, cb) {
-
-  }
-
-  put(String route, cb) {
-
-  }
-
-  delete(String route, cb) {
-    
-  }
-
-  head(String route, cb) {
-
-  }
-
-  options(String route, cb) {
-
-  }
-
-  patch(String route, cb) {
-
+    var handler = Handler();
+    handler.endpoint = route;
+    handler.method = "GET";
+    handler.body = cb;
+    database.add(handler);
   }
 
   listen(int port, Function(int port, HttpServer server) callback) async {
@@ -40,8 +27,17 @@ class Responder {
     );
     callback(port, server);
     await for (var request in server) {
-      // _handleEndpoints(request);
+      _handleEndpoints(request);
     }
   }
 
+  _handleEndpoints(HttpRequest req) {
+    database.forEach((handler) {
+      if (dynamicRouteMatcher(handler.endpoint, req.requestedUri.path) &&
+          handler.method == req.method) {
+        handler.body();
+        req.response.close();
+      }
+    });
+  }
 }

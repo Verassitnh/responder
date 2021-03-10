@@ -1,6 +1,6 @@
 import 'package:responder/responder.dart';
 
-var app = Responder();
+var app = Responder({});
 var port = 3000;
 
 void main() {
