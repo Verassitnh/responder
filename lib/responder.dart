@@ -1,7 +1,18 @@
 import 'dart:io';
+import 'route.dart';
+
+class Method {
+  static final get = "GET";
+  static final post = "POST";
+  static final put = "PUT";
+  static final options = "OPTIONS";
+  static final delete = "DELETE";
+  static final head = "HEAD";
+  static final patch = "PATCH";
+}
 
 class Handler {
-  String endpoint;
+  Route endpoint;
   String method;
   Function body;
 }
@@ -9,13 +20,13 @@ class Handler {
 class Responder {
   Responder(this.settings);
 
-  List<Handler> database;
+  List<Handler> database = [];
   final Map<String, dynamic> settings;
 
   get(String route, cb) {
     var handler = Handler();
-    handler.endpoint = route;
-    handler.method = "GET";
+    handler.endpoint = Route(route);
+    handler.method = Method.get;
     handler.body = cb;
     database.add(handler);
   }
@@ -33,9 +44,9 @@ class Responder {
 
   _handleEndpoints(HttpRequest req) {
     database.forEach((handler) {
-      if (dynamicRouteMatcher(handler.endpoint, req.requestedUri.path) &&
+      if (handler.endpoint.match(req.requestedUri.path) &&
           handler.method == req.method) {
-        handler.body();
+        handler.body(req);
         req.response.close();
       }
     });

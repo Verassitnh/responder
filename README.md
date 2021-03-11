@@ -37,7 +37,6 @@ void main() {
 #### `.headers`
 #### `.hostname`
 #### `.method`
-#### `.protocol`
 #### `.url`
 #### `.body`
 #### `.query`
