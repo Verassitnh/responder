@@ -44,7 +44,7 @@ class Responder {
 
   _handleEndpoints(HttpRequest req) {
     database.forEach((handler) {
-      if (handler.endpoint.match(req.requestedUri.path) &&
+      if (handler.endpoint.match(req.uri.path) &&
           handler.method == req.method) {
         handler.body(req);
         req.response.close();
